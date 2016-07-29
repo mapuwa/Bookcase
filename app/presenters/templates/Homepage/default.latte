@@ -1,6 +1,6 @@
 {block content}
     <h1 n:block="title">Můj blog</h1>
-	<a n:href="Post:create">Napsat nový příspěvek</a>
+	<a n:href="Post:create" n:if="$user->loggedIn">Napsat nový příspěvek</a>
 	<div n:foreach="$posts as $post" class="post">
 	    <div class="date">{$post->created_at|date:'F j, Y'}</div>
 

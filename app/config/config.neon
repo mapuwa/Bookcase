@@ -13,3 +13,8 @@ session:
 
 services:
 	router: App\RouterFactory::createRouter
+	- App\Model\ArticleManager
+
+security:
+	users:
+		admin: passw

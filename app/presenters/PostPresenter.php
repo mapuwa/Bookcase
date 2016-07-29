@@ -26,11 +26,20 @@ class PostPresenter extends Nette\Application\UI\Presenter
     }
     public function actionEdit($id)
     {
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->redirect('Sign:in');
+        }
         $post = $this->database->table('posts')->get($id);
         if (!$post) {
             $this->error('Příspěvek nebyl nalezen');
         }
         $this['postForm']->setDefaults($post->toArray());
+    }
+    public function actionCreate()
+    {
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->redirect('Sign:in');
+        }
     }
     protected function createComponentPostForm()
     {
@@ -47,6 +56,9 @@ class PostPresenter extends Nette\Application\UI\Presenter
     }
     public function postFormSucceeded($form, $values)
     {
+        if (!$this->getUser()->isLoggedIn()) {
+            $this->error('Pro vytvoření, nebo editování příspěvku se musíte přihlásit.');
+        }
         $postId = $this->getParameter('id');
 
         if ($postId) {
