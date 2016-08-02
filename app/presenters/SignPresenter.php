@@ -4,7 +4,7 @@ namespace App\Presenters;
 
 use Nette;
 use Nette\Application\UI\Form;
-
+use Nette\Security as NS;
 
 class SignPresenter extends Nette\Application\UI\Presenter
 {
@@ -38,6 +38,13 @@ class SignPresenter extends Nette\Application\UI\Presenter
         $this->getUser()->logout();
         $this->flashMessage('Odhlášení bylo úspěšné.');
         $this->redirect('Homepage:');
+    }
+    public function actionIn()
+    {
+        if ($this->getUser()->isLoggedIn()) {
+            $this->flashMessage('Již jste přihlášen.');
+            $this->redirect('Homepage:');
+        }
     }
 
 }
