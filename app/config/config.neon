@@ -15,4 +15,4 @@ services:
 	router: App\RouterFactory::createRouter
 	authenticator: App\Authenticator
 	authorizator: App\AuthorizatorFactory::create
-	- App\Model\ArticleManager
+	- App\Model\BookManager

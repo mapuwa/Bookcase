@@ -4,7 +4,7 @@ namespace App\Model;
 
 use Nette;
 
-class ArticleManager
+class BookManager
 {
     use Nette\SmartObject;
 
@@ -18,7 +18,7 @@ class ArticleManager
         $this->database = $database;
     }
 
-    public function getPublicArticles()
+    public function getPublicBooks()
     {
         return $this->database->table('books')
             ->where('created_at < ', new \DateTime())

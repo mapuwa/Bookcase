@@ -3,20 +3,20 @@
 namespace App\FrontModule\Presenters;
 
 use Nette;
-use App\Model\ArticleManager;
+use App\Model\BookManager;
 
 class HomepagePresenter extends Nette\Application\UI\Presenter
 {
-    /** @var ArticleManager */
-    private $articleManager;
+    /** @var BookManager */
+    private $bookManager;
 
-    public function __construct(ArticleManager $articleManager)
+    public function __construct(BookManager $manager)
     {
-        $this->articleManager = $articleManager;
+        $this->bookManager = $manager;
     }
 
     public function renderDefault()
     {
-        $this->template->posts = $this->articleManager->getPublicArticles()->limit(5);
+        $this->template->posts = $this->bookManager->getPublicBooks()->limit(5);
     }
 }
