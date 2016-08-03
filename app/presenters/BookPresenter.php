@@ -5,7 +5,7 @@ use Nette;
 use Nette\Application\UI\Form;
 
 
-class PostPresenter extends Nette\Application\UI\Presenter
+class BookPresenter extends Nette\Application\UI\Presenter
 {
     /** @var Nette\Database\Context */
     private $database;
@@ -17,7 +17,7 @@ class PostPresenter extends Nette\Application\UI\Presenter
 
     public function renderShow($id)
     {
-        $post = $this->database->table('posts')->get($id);
+        $post = $this->database->table('books')->get($id);
 	    if (!$post) {
 	        $this->error('Stránka nebyla nalezena');
 	    }
@@ -29,7 +29,7 @@ class PostPresenter extends Nette\Application\UI\Presenter
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect('Sign:in');
         }
-        $post = $this->database->table('posts')->get($id);
+        $post = $this->database->table('books')->get($id);
         if (!$post) {
             $this->error('Příspěvek nebyl nalezen');
         }
@@ -46,7 +46,7 @@ class PostPresenter extends Nette\Application\UI\Presenter
         $form = new Form;
         $form->addText('title', 'Titulek:')
             ->setRequired();
-        $form->addTextArea('content', 'Obsah:')
+        $form->addTextArea('desc', 'Obsah:')
             ->setRequired();
 
         $form->addSubmit('send', 'Uložit a publikovat');
@@ -62,10 +62,10 @@ class PostPresenter extends Nette\Application\UI\Presenter
         $postId = $this->getParameter('id');
 
         if ($postId) {
-            $post = $this->database->table('posts')->get($postId);
+            $post = $this->database->table('books')->get($postId);
             $post->update($values);
         } else {
-            $post = $this->database->table('posts')->insert($values);
+            $post = $this->database->table('books')->insert($values);
         }
         $this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
         $this->redirect('show', $post->id);

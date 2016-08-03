@@ -1,5 +1,7 @@
 <?php
 
+namespace App;
+
 use Nette\Security\Permission;
 
 class AuthorizatorFactory
@@ -8,8 +10,7 @@ class AuthorizatorFactory
     /**
      * @return \Nette\Security\IAuthorizator
      */
-
-    static public function create()
+    public static function create()
     {
         $permission = new Permission();
 

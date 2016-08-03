@@ -1,8 +1,11 @@
 <?php
 
+namespace App;
+
+use Nette;
 use Nette\Security as NS;
 
-class MyAuthenticator extends Nette\Object implements NS\IAuthenticator
+class Authenticator extends Nette\Object implements NS\IAuthenticator
 {
     public $database;
 

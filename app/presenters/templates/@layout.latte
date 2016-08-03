@@ -3,19 +3,20 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,700,300" rel="stylesheet" type="text/css">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
 </head>
 
 <body>
-	<ul class="navig">
-		<li><a n:href="Homepage:">Články</a></li>
-		{if $user->loggedIn}
-			<li><a n:href="Sign:out">Odhlásit</a></li>
-		{else}
-			<li><a n:href="Sign:in">Přihlásit</a></li>
-		{/if}
-	</ul>
+    <ul class="navig">
+        <li><a n:href="Homepage:">Články</a></li>
+        {if $user->loggedIn}
+            <li><a n:href="Sign:out">Odhlásit</a></li>
+        {else}
+            <li><a n:href="Sign:in">Přihlásit</a></li>
+        {/if}
+    </ul>
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
 	{include content}

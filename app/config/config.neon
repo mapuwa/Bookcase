@@ -13,7 +13,6 @@ session:
 
 services:
 	router: App\RouterFactory::createRouter
-	authenticator: MyAuthenticator
-	authorizatorFactory: AuthorizatorFactory
-	authorizator: authorizatorFactory::create
+	authenticator: App\Authenticator
+	authorizator: App\AuthorizatorFactory::create
 	- App\Model\ArticleManager
