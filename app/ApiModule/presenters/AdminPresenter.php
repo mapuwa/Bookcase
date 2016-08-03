@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Presenters;
+namespace App\ApiModule\Presenters;
 
 use Nette;
 use App\Model\ArticleManager;
 
-class HomepagePresenter extends Nette\Application\UI\Presenter
+class AdminPresenter extends Nette\Application\UI\Presenter
 {
     /** @var ArticleManager */
     private $articleManager;
