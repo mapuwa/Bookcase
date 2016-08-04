@@ -17,23 +17,23 @@ class BookPresenter extends Nette\Application\UI\Presenter
 
     public function renderShow($id)
     {
-        $post = $this->database->table('books')->get($id);
-	    if (!$post) {
+        $book = $this->database->table('books')->get($id);
+	    if (!$book) {
 	        $this->error('Stránka nebyla nalezena');
 	    }
-	    $this->template->post = $post;
-        $this->template->comments = $post->related('comment')->order('created_at');
+	    $this->template->book = $book;
+        $this->template->comments = $book->related('comment')->order('created_at');
     }
     public function actionEdit($id)
     {
         if (!$this->getUser()->isLoggedIn()) {
             $this->redirect('Sign:in');
         }
-        $post = $this->database->table('books')->get($id);
-        if (!$post) {
+        $book = $this->database->table('books')->get($id);
+        if (!$book) {
             $this->error('Příspěvek nebyl nalezen');
         }
-        $this['postForm']->setDefaults($post->toArray());
+        $this['bookForm']->setDefaults($book->toArray());
     }
     public function actionCreate()
     {
@@ -41,7 +41,7 @@ class BookPresenter extends Nette\Application\UI\Presenter
             $this->redirect('Sign:in');
         }
     }
-    protected function createComponentPostForm()
+    protected function createComponentBookForm()
     {
         $form = new Form;
         $form->addText('title', 'Titulek:')
@@ -50,32 +50,29 @@ class BookPresenter extends Nette\Application\UI\Presenter
             ->setRequired();
 
         $form->addSubmit('send', 'Uložit a publikovat');
-        $form->onSuccess[] = [$this, 'postFormSucceeded'];
+        $form->onSuccess[] = [$this, 'bookFormSucceeded'];
 
         return $form;
     }
-    public function postFormSucceeded($form, $values)
+    public function bookFormSucceeded($form, $values)
     {
         if (!$this->getUser()->isLoggedIn()) {
             $this->error('Pro vytvoření, nebo editování příspěvku se musíte přihlásit.');
         }
-        $postId = $this->getParameter('id');
+        $bookId = $this->getParameter('id');
 
-        if ($postId) {
-            $post = $this->database->table('books')->get($postId);
-            $post->update($values);
+        if ($bookId) {
+            $book = $this->database->table('books')->get($bookId);
+            $book->update($values);
         } else {
-            $post = $this->database->table('books')->insert($values);
+            $book = $this->database->table('books')->insert($values);
         }
         $this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
-        $this->redirect('show', $post->id);
+        $this->redirect('show', $book->id);
     }
     protected function createComponentCommentForm()
 	{
 	    $form = new Form;
-	    $form->addText('name', 'Jméno:')
-	        ->setRequired();
-	    $form->addEmail('email', 'Email:');
 	    $form->addTextArea('content', 'Komentář:')
 	        ->setRequired();
 	    $form->addSubmit('send', 'Publikovat komentář');
@@ -84,11 +81,9 @@ class BookPresenter extends Nette\Application\UI\Presenter
 	}
 	public function commentFormSucceeded($form, $values)
 	{
-	    $postId = $this->getParameter('id');
+	    $bookId = $this->getParameter('id');
 	    $this->database->table('comments')->insert([
-	        'post_id' => $postId,
-	        'name' => $values->name,
-	        'email' => $values->email,
+	        'book_id' => $bookId,
 	        'content' => $values->content,
 	    ]);
 	    $this->flashMessage('Děkuji za komentář', 'success');
