@@ -23,10 +23,11 @@ class BookPresenter extends Nette\Application\UI\Presenter
 	    }
 	    $this->template->book = $book;
         $this->template->comments = $book->related('comment')->order('created_at');
+        $this->template->user = $this->getUser();
     }
     public function actionEdit($id)
     {
-        if (!$this->getUser()->isLoggedIn()) {
+        if (!$this->getUser()->isAllowed('book', 'create')) {
             $this->redirect('Sign:in');
         }
         $book = $this->database->table('books')->get($id);
@@ -37,10 +38,11 @@ class BookPresenter extends Nette\Application\UI\Presenter
     }
     public function actionCreate()
     {
-        if (!$this->getUser()->isLoggedIn()) {
+        if (!$this->getUser()->isAllowed('book', 'create')) {
             $this->redirect('Sign:in');
         }
     }
+
     protected function createComponentBookForm()
     {
         $form = new Form;
@@ -56,7 +58,7 @@ class BookPresenter extends Nette\Application\UI\Presenter
     }
     public function bookFormSucceeded($form, $values)
     {
-        if (!$this->getUser()->isLoggedIn()) {
+        if (!$this->getUser()->isAllowed('book', 'create')) {
             $this->error('Pro vytvoření, nebo editování příspěvku se musíte přihlásit.');
         }
         $bookId = $this->getParameter('id');
@@ -70,9 +72,10 @@ class BookPresenter extends Nette\Application\UI\Presenter
         $this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
         $this->redirect('show', $book->id);
     }
+
     protected function createComponentCommentForm()
 	{
-	    $form = new Form;
+	    $form = new Form();
 	    $form->addTextArea('content', 'Komentář:')
 	        ->setRequired();
 	    $form->addSubmit('send', 'Publikovat komentář');
@@ -81,6 +84,10 @@ class BookPresenter extends Nette\Application\UI\Presenter
 	}
 	public function commentFormSucceeded($form, $values)
 	{
+        if (!$this->getUser()->isAllowed('comment', 'create')) {
+            $this->error('Pro komentování se musíte přihlásit.');
+        }
+
 	    $bookId = $this->getParameter('id');
 	    $this->database->table('comments')->insert([
 	        'book_id' => $bookId,

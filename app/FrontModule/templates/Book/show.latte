@@ -14,8 +14,11 @@
             <div>{$comment->content}</div>
         {/foreach}
     </div>
-    <h2>Enter new comment</h2>
+    {if $user->isAllowed('comment', 'create')}
+        <h2>Enter new comment</h2>
 
-    {control commentForm}
-
+        {control commentForm}
+    {else}
+        <p>Pro přidávání komentářů se musíte přihlásit.</p>
+    {/if}
 {/block}
