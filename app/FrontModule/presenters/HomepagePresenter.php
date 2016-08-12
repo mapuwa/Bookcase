@@ -2,10 +2,10 @@
 
 namespace App\FrontModule\Presenters;
 
-use Nette;
+use App;
 use App\Model\BookManager;
 
-class HomepagePresenter extends Nette\Application\UI\Presenter
+class HomepagePresenter extends App\Presenter
 {
     /** @var BookManager */
     private $bookManager;
@@ -18,5 +18,11 @@ class HomepagePresenter extends Nette\Application\UI\Presenter
     public function renderDefault()
     {
         $this->template->posts = $this->bookManager->getPublicBooks()->limit(5);
+    }
+    protected function createComponentSearchControl()
+    {
+        $control = $this->searchControlFactory->create();
+
+        return $control;
     }
 }

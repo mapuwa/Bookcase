@@ -16,3 +16,4 @@ services:
 	authenticator: App\Authenticator
 	authorizator: App\AuthorizatorFactory::create
 	- App\Model\BookManager
+	- ISearchControlFactory

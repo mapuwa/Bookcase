@@ -3,10 +3,11 @@
 namespace App\FrontModule\Presenters;
 
 use Nette;
+use App;
 use Nette\Application\UI\Form;
 use Nette\Security as NS;
 
-class SignPresenter extends Nette\Application\UI\Presenter
+class SignPresenter extends App\Presenter
 {
 
     protected function createComponentSignInForm()
