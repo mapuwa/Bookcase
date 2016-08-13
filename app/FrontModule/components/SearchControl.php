@@ -8,13 +8,15 @@ use Nette\Application\UI\Form;
 class SearchControl extends UI\Control
 {
 
+    public $onFormSuccess;
+
     public function render(){
-        echo($this['form']);
+        $this->template->render(__DIR__ . '/SearchControl.latte');
     }
     public function processForm(Form $form)
     {
-        $values = $form->getValues();
-
+        //$values = $form->getValues();
+        $this->onFormSuccess();
     }
     /**
      * @return Form

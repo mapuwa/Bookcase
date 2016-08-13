@@ -1,0 +1,11 @@
+
+{form form}
+
+    <!-- Jednoduché vykreslení chyb -->
+    <ul class="errors" n:if="$form->hasErrors()">
+        <li n:foreach="$form->errors as $error">{$error}</li>
+    </ul>
+
+    {input query}
+    {input submit}
+{/form}
