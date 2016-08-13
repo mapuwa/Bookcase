@@ -9,15 +9,19 @@
 </head>
 
 <body>
-    <ul class="navig">
-        <li><a n:href="Homepage:">Články</a></li>
-        {if $user->loggedIn}
-            <li><a n:href="Sign:out">Odhlásit</a></li>
-        {else}
-            <li><a n:href="Sign:in">Přihlásit</a></li>
-        {/if}
-        {control search}
-    </ul>
+    <nav>
+        <ul class="navigation">
+            <li class="navigation__item navigation__item--header"><a n:href="Homepage:">Bookcase</a></li>
+            <li class="navigation__item" >{control search}</li>
+            <li class="navigation__item" ><a n:href="Homepage:">Nastavení</a></li>
+            {if $user->loggedIn}
+                <li class="navigation__item" ><a n:href="Sign:out">Odhlásit</a></li>
+            {else}
+                <li class="navigation__item" ><a n:href="Sign:in">Přihlásit</a></li>
+            {/if}
+        </ul>
+    </nav>
+
 	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
 
 	{include content}
