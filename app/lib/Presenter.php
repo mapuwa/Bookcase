@@ -9,7 +9,7 @@ abstract class Presenter extends Nette\Application\UI\Presenter
     /** @var \ISearchControlFactory @inject */
     public $searchControlFactory;
 
-    protected function createComponentSearchControl()
+    protected function createComponentSearch()
     {
         $control = $this->searchControlFactory->create();
 

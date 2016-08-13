@@ -23,7 +23,7 @@ class SearchControl extends UI\Control
         $form->addText('username', 'Uživ. jméno')->setRequired();
         $form->addPassword('password', 'Heslo')->setRequired();
         $form->addSubmit('submit', 'Přihlásit se');
-        $form->onSuccess[] = $this->processForm;
+        $form->onSuccess[] = [$this, 'processForm'];
         return $form;
     }
 }
