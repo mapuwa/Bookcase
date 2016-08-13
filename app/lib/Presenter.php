@@ -13,7 +13,7 @@ abstract class Presenter extends Nette\Application\UI\Presenter
     {
         $control = $this->searchControlFactory->create();
         $control->onFormSuccess[] = function () {
-            $this->redirect('Book:show', 6);
+            $this->redirect('Search:book', 6);
         };
         return $control;
     }

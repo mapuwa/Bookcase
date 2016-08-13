@@ -1,5 +1,5 @@
 {block content}
-	<div class="container">
+    <div class="container">
         <div n:foreach="$posts as $post" class="post">
             <div class="date">{$post->created_at|date:'F j, Y'}</div>
 
@@ -7,8 +7,5 @@
 
             <div>{$post->desc}</div>
         </div>
-
-
-        <a n:href="Book:create" n:if="$user->loggedIn">Add new book</a>
     </div>
 {/block}

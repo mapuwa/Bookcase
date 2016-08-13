@@ -3,14 +3,13 @@
 namespace App\FrontModule\Presenters;
 
 use App;
-use App\Model\BookManager;
 
 class HomepagePresenter extends App\FrontModule\Presenters\Presenter
 {
-    /** @var BookManager */
+    /** @var \App\Model\BookManager */
     private $bookManager;
 
-    public function __construct(BookManager $manager)
+    public function __construct(App\Model\BookManager $manager)
     {
         $this->bookManager = $manager;
     }

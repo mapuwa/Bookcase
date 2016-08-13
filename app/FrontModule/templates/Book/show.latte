@@ -1,24 +1,26 @@
 {block content}
-    <p><a n:href="Homepage:default">← back to books list</a></p>
+    <div class="container">
+        <p><a n:href="Homepage:default">← back to books list</a></p>
 
-    <div class="date">{$book->created_at|date:'F j, Y'}</div>
+        <div class="date">{$book->created_at|date:'F j, Y'}</div>
 
-    <h1 n:block="title">{$book->title}</h1>
-    {if $user->loggedIn}<a n:href="edit $book->id">Edit book</a>{/if}
-    <div class="book">{$book->desc}</div>
+        <h1 n:block="title">{$book->title}</h1>
+        {if $user->loggedIn}<a n:href="edit $book->id">Edit book</a>{/if}
+        <div class="book">{$book->desc}</div>
 
-    <h2>Comments</h2>
+        <h2>Comments</h2>
 
-    <div class="comments">
-        {foreach $comments as $comment}
-            <div>{$comment->content}</div>
-        {/foreach}
+        <div class="comments">
+            {foreach $comments as $comment}
+                <div>{$comment->content}</div>
+            {/foreach}
+        </div>
+        {if $user->isAllowed('comment', 'create')}
+            <h2>Enter new comment</h2>
+
+            {control commentForm}
+        {else}
+            <p>Pro přidávání komentářů se musíte přihlásit.</p>
+        {/if}
     </div>
-    {if $user->isAllowed('comment', 'create')}
-        <h2>Enter new comment</h2>
-
-        {control commentForm}
-    {else}
-        <p>Pro přidávání komentářů se musíte přihlásit.</p>
-    {/if}
 {/block}

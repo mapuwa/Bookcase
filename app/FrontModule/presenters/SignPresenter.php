@@ -13,10 +13,10 @@ class SignPresenter extends App\FrontModule\Presenters\Presenter
     protected function createComponentSignInForm()
     {
         $form = new Form;
-        $form->addText('username', 'Uživatelské jméno:')
+        $form->addText('username', 'Username:')
             ->setRequired('Prosím vyplňte své uživatelské jméno.');
 
-        $form->addPassword('password', 'Heslo:')
+        $form->addPassword('password', 'Password:')
             ->setRequired('Prosím vyplňte své heslo.');
 
         $form->addSubmit('send', 'Přihlásit');
