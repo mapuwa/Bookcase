@@ -5,7 +5,7 @@ namespace App\FrontModule\Presenters;
 use App;
 use App\Model\BookManager;
 
-class HomepagePresenter extends App\Presenter
+class HomepagePresenter extends App\FrontModule\Presenters\Presenter
 {
     /** @var BookManager */
     private $bookManager;

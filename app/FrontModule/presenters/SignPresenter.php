@@ -7,7 +7,7 @@ use App;
 use Nette\Application\UI\Form;
 use Nette\Security as NS;
 
-class SignPresenter extends App\Presenter
+class SignPresenter extends App\FrontModule\Presenters\Presenter
 {
 
     protected function createComponentSignInForm()

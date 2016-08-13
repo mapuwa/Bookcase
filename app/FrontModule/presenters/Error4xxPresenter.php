@@ -6,7 +6,7 @@ use Nette;
 use App;
 
 
-class Error4xxPresenter extends App\Presenter
+class Error4xxPresenter extends App\FrontModule\Presenters\Presenter
 {
 
 	public function startup()

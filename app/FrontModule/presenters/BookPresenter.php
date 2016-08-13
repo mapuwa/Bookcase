@@ -6,7 +6,7 @@ use App;
 use Nette\Application\UI\Form;
 
 
-class BookPresenter extends Nette\Application\UI\Presenter
+class BookPresenter extends App\FrontModule\Presenters\Presenter
 {
     /** @var Nette\Database\Context */
     private $database;

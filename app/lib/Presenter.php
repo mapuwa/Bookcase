@@ -1,12 +1,12 @@
 <?php
-namespace App;
+namespace App\FrontModule\Presenters;
 
 use Nette;
 use Nette\Application\UI;
 
 abstract class Presenter extends Nette\Application\UI\Presenter
 {
-    /** @var \ISearchControlFactory @inject */
+    /** @var \App\FrontModule\Components\ISearchControlFactory @inject */
     public $searchControlFactory;
 
     protected function createComponentSearch()
