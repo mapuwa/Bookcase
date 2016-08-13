@@ -8,6 +8,7 @@ body {
 	margin: 5rem auto;
 	padding: 2rem;
 }
+/* Navigation */
 .navigation {
 	list-style: none;
 	width: 100vw;
@@ -23,15 +24,22 @@ body {
 	color: black;
 	text-decoration: none;
 	font-weight: 600;
+    font-size: 1.2em;
 }
 .navigation__item a:hover {
 	color: #3484d2;
 	text-decoration: underline;
 }
+
 .navigation__item--header {
 	font-size: 2em;
 	font-weight: 700;
+    letter-spacing: 0.03em;
+    margin-right: 2em;
+    position: relative;
+    top: 0.1em;
 }
+/* Navigation - Search Component */
 .navigation input[type="text"] {
 	width: 350px;
 }
