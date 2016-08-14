@@ -5,7 +5,7 @@
 
         <div n:foreach="$books as $book" class="post">
             <img src="{$book['image']}">
-            <h2>{$book['title']}</h2>
+            <h2><a n:href="Search:preview 5">{$book['title']}</a></h2>
 
             <div>{$book['author']}</div>
         </div>

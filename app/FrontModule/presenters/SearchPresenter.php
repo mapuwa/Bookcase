@@ -22,6 +22,11 @@ class SearchPresenter extends App\FrontModule\Presenters\Presenter
         $this->template->query = $id;
         $this->template->books = $this->pageWrapper->search($id);
     }
+
+    public function renderPreview($id)
+    {
+        $this->template->book = $this->pageWrapper->getPage('http://www.databazeknih.cz/knihy/veda-na-zemeplose-veda-na-zemeplose-iii-darwinovy-hodinky-17174');
+    }
     public function actionBook($id)
     {
         $this->value = $id;
