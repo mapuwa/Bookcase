@@ -7,16 +7,20 @@ use Nette\Application\UI\Form;
 
 class SearchControl extends UI\Control
 {
-
+    private $value;
     public $onFormSuccess;
+    public function  __construct($val = "")
+    {
+        $this->value = $val;
+    }
 
     public function render(){
         $this->template->render(__DIR__ . '/SearchControl.latte');
     }
     public function processForm(Form $form)
     {
-        //$values = $form->getValues();
-        $this->onFormSuccess();
+        $values = $form->getValues();
+        $this->onFormSuccess($values);
     }
     /**
      * @return Form
@@ -24,7 +28,7 @@ class SearchControl extends UI\Control
     protected function createComponentForm()
     {
         $form = new Form;
-        $form->addText('query', '');
+        $form->addText('query', '')->setAttribute('value', $this->value);
         $form->addSubmit('submit', 'Hledat');
         $form->onSuccess[] = [$this, 'processForm'];
         return $form;
@@ -35,5 +39,5 @@ class SearchControl extends UI\Control
 interface ISearchControlFactory
 {
     /** @return SearchControl */
-    function create();
+    function create($val);
 }

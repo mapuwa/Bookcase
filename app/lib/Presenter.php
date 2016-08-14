@@ -11,9 +11,9 @@ abstract class Presenter extends Nette\Application\UI\Presenter
 
     protected function createComponentSearch()
     {
-        $control = $this->searchControlFactory->create();
-        $control->onFormSuccess[] = function () {
-            $this->redirect('Search:book', 6);
+        $control = $this->searchControlFactory->create("");
+        $control->onFormSuccess[] = function ($values) {
+            $this->redirect('Search:book', $values['query']);
         };
         return $control;
     }
