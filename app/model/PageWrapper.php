@@ -60,7 +60,7 @@ class PageWrapper
                 'image' => $imageURL,
                 'title' => $title,
                 'author' => $author,
-                'link' => $link
+                'link' => 'http://www.databazeknih.cz/' . $link
             ];
         }
         return $result;

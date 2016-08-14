@@ -3,5 +3,10 @@
         <h1>{$book['title']}</h1>
         <h2>{join(', ',$book['authors'])}</h2>
         <img src="{$book['image']}">
+        <p>{$book['description']}</p>
+        <h4>Počet stran: {$book['pages']}</h4>
+        <h4>Vydáno: {$book['datePublished']}, {$book['publisher']}</h4>
+        <h4>Žánr: {$book['genre']}</h4>
+        <h4>ISBN: {$book['isbn']}</h4>
     </div>
 {/block}
