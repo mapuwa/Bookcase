@@ -10,15 +10,13 @@ class PageWrapper
     {
         $url = "http://www.databazeknih.cz/search?q=".urlencode($query);
         $r = $this->getPage($url);
-
-        \Tracy\Debugger::barDump($r);
         $html = $r['content'];
         $result = [];
         if ($r['redirect'] === false) {
             $result = $this->parseSearchResults($html);
         }
         else {
-            //$this->parseBookPage($html);
+            $result[] = $this->parseBookPage($html);
         }
         return $result;
     }
@@ -57,5 +55,33 @@ class PageWrapper
         }
         return $result;
     }
+    protected function parseBookPage($html)
+    {
+        $dom = new \DOMDocument();
+        @$dom->loadHTML($html);
+        $xpath = new \DOMXPath($dom);
 
+        $a = "*";
+
+        $image = $xpath->query("//*[@class='kniha_img']")->item(0)->getAttribute('src');
+        $title = $xpath->query("//*[@itemprop='name']")->item(0)->nodeValue;
+        $desc = $xpath->query("//*[@itemprop='description']")->item(0)->nodeValue;
+
+
+
+        $authors = [];
+        $auth = $xpath->query("//*[@itemprop='author']")->item(0);
+        foreach ( $xpath->query(".//a", $auth) as $author) {
+              $authors[] = $author->nodeValue;
+        }
+
+        return [
+            'image' => $image,
+            'title' => $title,
+            'author' => $a,
+            'authors' => $authors,
+            'description' => $desc
+        ];
+
+    }
 }
