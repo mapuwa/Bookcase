@@ -16,8 +16,9 @@ class PageWrapper
             $result = $this->parseSearchResults($html);
         }
         else {
-            $result[] = $this->parseBookPage($html);
-            \Tracy\Debugger::barDump($this->parseBookPage($html),"Return");
+            $r = $this->parseBookPage($html);
+            $r['author'] = $r['datePublished'] . ', ' . join(', ', $r['authors']);
+            $result[] = $r ;
         }
         return $result;
     }
@@ -32,7 +33,7 @@ class PageWrapper
         $last_url = curl_getinfo($ch, CURLINFO_REDIRECT_URL);
         curl_close($ch);
         if ($last_url !== false) {
-            $html = $this->getPage($last_url.'?show=binafo')['content'];
+            $html = $this->getPage($last_url . '?show=binfo')['content'];
         }
         return ['content' => $html, 'redirect' => !!$last_url];
     }
@@ -62,8 +63,6 @@ class PageWrapper
         @$dom->loadHTML($html);
         $xpath = new \DOMXPath($dom);
 
-        $a = "*";
-
         $image = $xpath->query("//*[@class='kniha_img']")->item(0)->getAttribute('src');
         $title = $xpath->query("//*[@itemprop='name']")->item(0)->nodeValue;
         $desc = $xpath->query("//*[@itemprop='description']")->item(0)->nodeValue;
@@ -72,7 +71,6 @@ class PageWrapper
         $publisher = $xpath->query("//*[@itemprop='publisher']")->item(0)->childNodes->item(0)->nodeValue;
         $pages = $xpath->query("//*[@itemprop='numberOfPages']")->item(0)->childNodes->item(0)->nodeValue;
         $isbn = $xpath->query("//*[@itemprop='isbn']")->item(0)->nodeValue;
-        
 
         $authors = [];
         $auth = $xpath->query("//*[@itemprop='author']")->item(0);
@@ -83,7 +81,6 @@ class PageWrapper
         return [
             'image' => $image,
             'title' => $title,
-            'author' => $a,
             'authors' => $authors,
             'description' => $desc,
             'genre' => $genre,
