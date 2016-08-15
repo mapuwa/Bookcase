@@ -26,6 +26,7 @@ class SearchPresenter extends App\FrontModule\Presenters\Presenter
     public function renderPreview($link)
     {
         $this->template->book = $this->pageWrapper->getPage($link);
+        $this->template->link = $link;
     }
     public function actionBook($id)
     {

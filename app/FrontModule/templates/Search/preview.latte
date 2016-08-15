@@ -9,4 +9,6 @@
         <h4>Žánr: {$book['genre']}</h4>
         <h4>ISBN: {$book['isbn']}</h4>
     </div>
+
+    <a n:href="Book:create $link" n:if="$user->loggedIn">Add new book</a>
 {/block}

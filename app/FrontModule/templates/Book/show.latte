@@ -6,7 +6,7 @@
 
         <h1 n:block="title">{$book->title}</h1>
         {if $user->loggedIn}<a n:href="edit $book->id">Edit book</a>{/if}
-        <div class="book">{$book->desc}</div>
+        <div class="book">{$book->description}</div>
 
         <h2>Comments</h2>
 

@@ -10,10 +10,13 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
 {
     /** @var Nette\Database\Context */
     private $database;
+    /** @var \App\Model\PageWrapper*/
+    private $pageWrapper;
 
-    public function __construct(Nette\Database\Context $database)
+    public function __construct(Nette\Database\Context $database, App\Model\PageWrapper $manager)
     {
         $this->database = $database;
+        $this->pageWrapper = $manager;
     }
 
     public function renderShow($id)
@@ -24,7 +27,14 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
 	    }
 	    $this->template->book = $book;
         $this->template->comments = $book->related('comment')->order('created_at');
-        $this->template->user = $this->getUser();
+    }
+    public function renderCreate($link)
+    {
+        if ($link) {
+            $book = $this->pageWrapper->getPage($link);
+            $this['bookForm']->setDefaults($book);
+        }
+
     }
     public function actionEdit($id)
     {
@@ -37,19 +47,18 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
         }
         $this['bookForm']->setDefaults($book->toArray());
     }
-    public function actionCreate()
+    public function actionCreate($link)
     {
         if (!$this->getUser()->isAllowed('book', 'create')) {
             $this->redirect('Sign:in');
         }
     }
-
     protected function createComponentBookForm()
     {
         $form = new Form;
         $form->addText('title', 'Titulek:')
             ->setRequired();
-        $form->addTextArea('desc', 'Obsah:')
+        $form->addTextArea('description', 'Obsah:')
             ->setRequired();
 
         $form->addSubmit('send', 'Uložit a publikovat');
