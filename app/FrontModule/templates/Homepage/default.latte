@@ -1,11 +1,12 @@
 {block content}
 	<div class="container">
-        <div n:foreach="$posts as $post" class="post">
-            <div class="date">{$post->created_at|date:'F j, Y'}</div>
+        <div n:foreach="$posts as $book" class="post">
+            <img src="{$book['image']}">
+            <h2><a n:href="Book:show $book->id">{$book->title}</a></h2>
+            <h3>{$book['authors']}</h3>
 
-            <h2><a n:href="Book:show $post->id">{$post->title}</a></h2>
 
-            <div>{$post->description}</div>
+            <div>{$book->datePublished}, {$book->publisher}</div>
         </div>
 
 

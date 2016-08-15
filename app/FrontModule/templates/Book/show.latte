@@ -1,12 +1,16 @@
 {block content}
     <div class="container">
         <p><a n:href="Homepage:default">← back to books list</a></p>
-
-        <div class="date">{$book->created_at|date:'F j, Y'}</div>
-
-        <h1 n:block="title">{$book->title}</h1>
         {if $user->loggedIn}<a n:href="edit $book->id">Edit book</a>{/if}
-        <div class="book">{$book->description}</div>
+
+        <h1>{$book['title']}</h1>
+        <h2>{$book['authors']}</h2>
+        <img src="{$book['image']}">
+        <p>{$book['description']}</p>
+        <h4>Počet stran: {$book['pages']}</h4>
+        <h4>Vydáno: {$book['datePublished']}, {$book['publisher']}</h4>
+        <h4>Žánr: {$book['genre']}</h4>
+        <h4>ISBN: {$book['isbn']}</h4>
 
         <h2>Comments</h2>
 
