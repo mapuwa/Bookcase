@@ -1,0 +1,12 @@
+{block content}
+    <div class="container">
+        <h1>Wishlist</h1>
+
+        <div n:foreach="$books as $book" class="post">
+            <img src="{$book['image']}">
+            <h2><a n:href="Book:show $book['id']">{$book['title']}</a></h2>
+
+            <div>{$book['authors']}</div>
+        </div>
+    </div>
+{/block}

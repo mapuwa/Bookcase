@@ -35,7 +35,14 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
             $book['authors'] =
             $this['bookForm']->setDefaults($book);
         }
-
+    }
+    public function renderWishlist()
+    {
+        $list = $this->database->table('wishlist')->where('user_id = ?', $this->getUser()->id)->order('added_at DESC');
+        $this->template->books = [];
+        foreach ($list as $book) {
+            $this->template->books[] = $book->ref('book')->toArray();
+        }
     }
     public function actionEdit($id)
     {
@@ -54,6 +61,13 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
             $this->redirect('Sign:in');
         }
     }
+    public function actionWishlist()
+    {
+        if (!$this->getUser()->isAllowed('book', 'create')) {
+            $this->redirect('Sign:in');
+        }
+    }
+
     protected function createComponentBookForm()
     {
         $form = new Form;
@@ -109,7 +123,7 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
             'content' => "wish",
         ]);
         $this->flashMessage('Kniha byla přidana', 'success');
-        $this->redirect('this');
+        $this->redirect('Book:wishlist');
     }
 
 
