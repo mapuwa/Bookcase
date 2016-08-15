@@ -89,6 +89,29 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
         $this->flashMessage('Příspěvek byl úspěšně publikován.', 'success');
         $this->redirect('show', $book->id);
     }
+    protected function createComponentWishForm()
+    {
+        $form = new Form();
+        $form->addTextArea('content', 'Komentář:')
+            ->setRequired();
+        $form->addSubmit('send', 'Pridat do wishlistu');
+        $form->onSuccess[] = [$this, 'wishFormSucceeded'];
+        return $form;
+    }
+    public function wishFormSucceeded($form, $values)
+    {
+        if (!$this->getUser()->isAllowed('comment', 'create')) {
+            $this->error('Pro komentování se musíte přihlásit.');
+        }
+        $this->database->table('wishlist')->insert([
+            'user_id' => $this->getUser()->id,
+            'book_id' => $this->getParameter('id'),
+            'content' => "wish",
+        ]);
+        $this->flashMessage('Kniha byla přidana', 'success');
+        $this->redirect('this');
+    }
+
 
     protected function createComponentCommentForm()
 	{

@@ -22,12 +22,7 @@ CREATE TABLE `books` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 INSERT INTO `books` (`id`, `title`, `description`, `created_at`, `pages`, `image`, `genre`, `datePublished`, `publisher`, `isbn`, `authors`) VALUES
-(1,	'Article One',	'Lorem ipusm dolor oneaaa',	'2016-07-28 18:24:47',	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(2,	'Article Two',	'Lorem ipsum dolor two',	'2016-07-28 18:24:47',	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(3,	'Article Three',	'Lorem ipsum dolor three',	'2016-07-28 18:24:47',	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(4,	'Test',	'adssssssssssssssssa',	'2016-07-29 07:33:11',	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(5,	'Cerm',	'aaa',	'2016-08-04 17:01:06',	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL),
-(6,	'aaaa',	'aaaaaa',	'2016-08-13 19:35:43',	0,	NULL,	NULL,	NULL,	NULL,	NULL,	NULL);
+(7,	'Vegan v kondici',	'Brendan Brazier je kanadský sportovec, pionýr veganského stravování. Jeho publikace Vegan v kondici se stala kultovní knihou světového vegetariánského a veganského hnutí. Jeho legendární dieta Thrive pomohla celé řadě sportovců k zisku olympijských medailí. Dieta se nezaměřuje pouze na profesionální sportovce, nýbrž i na ty z nás, kteří požadují optimální zdraví a výkonnost nebo jen chtějí předcházet nemocem. méně textu',	'2016-08-15 19:12:07',	328,	'http://www.databazeknih.cz/images_books/22_/222423/mid_vegan-v-kondici-222423.jpg',	'Literatura naučná',	2014,	'Mladá fronta',	'978-80-204-3400-5',	'Brazier Brendan');
 
 DROP TABLE IF EXISTS `comments`;
 CREATE TABLE `comments` (
@@ -43,8 +38,6 @@ CREATE TABLE `comments` (
   CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO `comments` (`id`, `book_id`, `user_id`, `content`, `created_at`) VALUES
-(1,	4,	NULL,	'aaaa',	'2016-08-04 17:01:31');
 
 DROP TABLE IF EXISTS `users`;
 CREATE TABLE `users` (
@@ -63,6 +56,7 @@ CREATE TABLE `wishlist` (
   `book_id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `content` text NOT NULL,
+  `added_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`book_id`,`user_id`),
   KEY `book_id` (`book_id`),
   KEY `user_id` (`user_id`),
@@ -70,5 +64,7 @@ CREATE TABLE `wishlist` (
   CONSTRAINT `wish_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+INSERT INTO `wishlist` (`book_id`, `user_id`, `content`, `added_at`) VALUES
+(7,	1,	'wish',	'2016-08-15 19:22:34');
 
--- 2016-08-15 19:04:37
+-- 2016-08-15 19:26:10

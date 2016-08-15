@@ -16,6 +16,10 @@
             {/foreach}
         </div>
         {if $user->isAllowed('comment', 'create')}
+            <h2>Add to wishlist</h2>
+
+            {control wishForm}
+
             <h2>Enter new comment</h2>
 
             {control commentForm}
