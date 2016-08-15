@@ -32,6 +32,7 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
     {
         if ($link) {
             $book = $this->pageWrapper->getPage($link);
+            $book['authors'] =
             $this['bookForm']->setDefaults($book);
         }
 
@@ -60,7 +61,13 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
             ->setRequired();
         $form->addTextArea('description', 'Obsah:')
             ->setRequired();
-
+        $form->addInteger('datePublished', 'Rok vydani');
+        $form->addInteger('pages', 'Pocet stran');
+        $form->addText('authors', 'Autor');
+        $form->addText('image', 'URL obrazku');
+        $form->addText('genre', 'Zanr');
+        $form->addText('publisher', 'vydavatel');
+        $form->addText('isbn', 'ISBN');
         $form->addSubmit('send', 'Uložit a publikovat');
         $form->onSuccess[] = [$this, 'bookFormSucceeded'];
 

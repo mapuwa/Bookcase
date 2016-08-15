@@ -78,7 +78,7 @@ class PageWrapper
         }
 
         return [
-            'authors' => $authors,
+            'authors' => join(', ',$authors),
             'image' => $xpath->query("//*[@class='kniha_img']")->item(0)->getAttribute('src'),
             'title' => $xpath->query("//*[@itemprop='name']")->item(0)->nodeValue,
             'description' => $xpath->query("//*[@itemprop='description']")->item(0)->nodeValue,
