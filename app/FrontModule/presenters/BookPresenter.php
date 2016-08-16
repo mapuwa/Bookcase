@@ -44,6 +44,14 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
             $this->template->books[] = $book->ref('book')->toArray();
         }
     }
+    public function renderReadlist()
+    {
+        $list = $this->database->table('readlist')->where('user_id = ?', $this->getUser()->id)->order('added_at DESC');
+        $this->template->books = [];
+        foreach ($list as $book) {
+            $this->template->books[] = $book->ref('book')->toArray();
+        }
+    }
     public function actionEdit($id)
     {
         if (!$this->getUser()->isAllowed('book', 'create')) {
@@ -62,6 +70,12 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
         }
     }
     public function actionWishlist()
+    {
+        if (!$this->getUser()->isAllowed('book', 'create')) {
+            $this->redirect('Sign:in');
+        }
+    }
+    public function actionReadlist()
     {
         if (!$this->getUser()->isAllowed('book', 'create')) {
             $this->redirect('Sign:in');
@@ -123,7 +137,7 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
             'content' => $values->content,
         ]);
         $this->flashMessage('Kniha byla přidana', 'success');
-        $this->redirect('Book:wishlist');
+        $this->redirect(':wishlist');
     }
     protected function createComponentReadForm()
     {
@@ -145,7 +159,7 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
             'content' => $values->content,
         ]);
         $this->flashMessage('Kniha byla přidana', 'success');
-        $this->redirect('Book:wishlist');
+        $this->redirect(':readlist');
     }
 
     protected function createComponentCommentForm()
