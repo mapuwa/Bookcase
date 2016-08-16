@@ -1,5 +1,11 @@
 {block content}
     <div class="container">
+        <ul class="booksnav">
+            <li><a n:href="Homepage:">Seznam knih</a></li>
+            <li>Wishlist</li>
+            <li><a n:href="Book:readlist">Seznam přečtených knih</a></li>
+        </ul>
+
         <h1>Wishlist</h1>
 
         <div n:foreach="$books as $book" class="post">

@@ -1,10 +1,15 @@
 {block content}
 	<div class="container">
+        <ul class="booksnav">
+            <li>Seznam knih</li>
+            <li><a n:href="Book:wishlist">Wishlist</a></li>
+            <li><a n:href="Book:readlist">Seznam přečtených knih</a></li>
+        </ul>
+        <h1>Právě přidané knihy</h1>
         <div n:foreach="$posts as $book" class="post">
             <img src="{$book['image']}">
             <h2><a n:href="Book:show $book->id">{$book->title}</a></h2>
             <h3>{$book['authors']}</h3>
-
 
             <div>{$book->datePublished}, {$book->publisher}</div>
         </div>
