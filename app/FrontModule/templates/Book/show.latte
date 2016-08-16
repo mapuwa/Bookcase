@@ -20,11 +20,22 @@
             {/foreach}
         </div>
         {if $user->isAllowed('comment', 'create')}
-            <h2>Add to wishlist</h2>
-            {control wishForm}
 
-            <h2>Do you alreade read this one</h2>
-            {control readForm}
+            {if $read}
+                <h2>This book you already read</h2>
+                <p>{$read}</p>
+            {else}
+                {if $wish}
+                    <h2>This book is in wishlist</h2>
+                    <p>{$wish}</p>
+                {else}
+                    <h2>Add to wishlist</h2>
+                    {control wishForm}
+                {/if}
+
+                <h2>Do you already read this one</h2>
+                {control readForm}
+            {/if}
 
             <h2>Enter new comment</h2>
 

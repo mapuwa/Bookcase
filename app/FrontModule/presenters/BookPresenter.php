@@ -25,6 +25,17 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
 	    if (!$book) {
 	        $this->error('Stránka nebyla nalezena');
 	    }
+        $this->template->wish = false;
+        $this->template->read = false;
+        $user = $this->getUser();
+        if ($user->loggedIn) {
+            $w = $this->database->table('wishlist')->get(array($id, $user->id));
+            $r = $this->database->table('readlist')->get(array($id, $user->id));
+            if ($w)
+                $this->template->wish = $w->content;
+            if ($r)
+                $this->template->read = $r->content;
+        }
 	    $this->template->book = $book;
         $this->template->comments = $book->related('comment')->order('created_at');
     }
@@ -144,7 +155,7 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
         $form = new Form();
         $form->addTextArea('content', 'Komentář:')
             ->setRequired();
-        $form->addSubmit('send', 'Pridat do wishlistu');
+        $form->addSubmit('send', 'Pridat do prectenych knih');
         $form->onSuccess[] = [$this, 'readFormSucceeded'];
         return $form;
     }
@@ -153,9 +164,14 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
         if (!$this->getUser()->isAllowed('comment', 'create')) {
             $this->error('Pro komentování se musíte přihlásit.');
         }
+        $userId = $this->getUser()->id;
+        $bookId = $this->getParameter('id');
+        $isWish = $this->database->table('wishlist')->get(array($bookId, $userId));
+        if ($isWish)
+            $isWish->delete();
         $this->database->table('readlist')->insert([
-            'user_id' => $this->getUser()->id,
-            'book_id' => $this->getParameter('id'),
+            'user_id' => $userId,
+            'book_id' => $bookId,
             'content' => $values->content,
         ]);
         $this->flashMessage('Kniha byla přidana', 'success');
