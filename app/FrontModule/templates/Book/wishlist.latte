@@ -11,8 +11,8 @@
         <div n:foreach="$books as $book" class="post">
             <img src="{$book['image']}">
             <h2><a n:href="Book:show $book['id']">{$book['title']}</a></h2>
-
-            <div>{$book['authors']}</div>
+            <h3>{$book['authors']}</h3>
+            <div>{$book['wish']}</div>
         </div>
     </div>
 {/block}

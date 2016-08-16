@@ -52,7 +52,9 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
         $list = $this->database->table('wishlist')->where('user_id = ?', $this->getUser()->id)->order('added_at DESC');
         $this->template->books = [];
         foreach ($list as $book) {
-            $this->template->books[] = $book->ref('book')->toArray();
+            $w = $book->ref('book')->toArray();
+            $w['wish'] = $book->content;
+            $this->template->books[] = $w;
         }
     }
     public function renderReadlist()
@@ -60,7 +62,9 @@ class BookPresenter extends App\FrontModule\Presenters\Presenter
         $list = $this->database->table('readlist')->where('user_id = ?', $this->getUser()->id)->order('added_at DESC');
         $this->template->books = [];
         foreach ($list as $book) {
-            $this->template->books[] = $book->ref('book')->toArray();
+            $r = $book->ref('book')->toArray();
+            $r['read'] = $book->content;
+            $this->template->books[] = $r;
         }
     }
     public function actionEdit($id)
