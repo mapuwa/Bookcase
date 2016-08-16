@@ -21,8 +21,10 @@
         </div>
         {if $user->isAllowed('comment', 'create')}
             <h2>Add to wishlist</h2>
-
             {control wishForm}
+
+            <h2>Do you alreade read this one</h2>
+            {control readForm}
 
             <h2>Enter new comment</h2>
 
